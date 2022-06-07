@@ -107,7 +107,7 @@ public class Building implements
     this.mergeZ13Buildings = config.arguments().getBoolean(
       "building_merge_z13",
       "building layer: merge nearby buildings at z13",
-      true
+      false
     );
   }
 
@@ -155,17 +155,17 @@ public class Building implements
       parseDoubleOrNull(element.buildingminLevel())
     );
 
-    int renderHeight = (int) Math.ceil(height != null ? height : levels != null ? (levels * 3.66) : 5);
+    int renderHeight = (int) Math.ceil(height != null ? height : levels != null ? (levels * 3.66) : 0);
     int renderMinHeight = (int) Math.floor(minHeight != null ? minHeight : minLevels != null ? (minLevels * 3.66) : 0);
 
     if (renderHeight < 3660 && renderMinHeight < 3660) {
       var feature = features.polygon(LAYER_NAME).setBufferPixels(BUFFER_SIZE)
-        .setMinZoom(13)
-        .setMinPixelSize(2)
-        .setAttrWithMinzoom(Fields.RENDER_HEIGHT, renderHeight, 14)
-        .setAttrWithMinzoom(Fields.RENDER_MIN_HEIGHT, renderMinHeight, 14)
-        .setAttrWithMinzoom(Fields.COLOUR, color, 14)
-        .setAttrWithMinzoom(Fields.HIDE_3D, hide3d, 14)
+        .setMinZoom(0)
+        .setMinPixelSize(1)
+        .setAttrWithMinzoom(Fields.RENDER_HEIGHT, renderHeight, 0)
+        .setAttrWithMinzoom(Fields.RENDER_MIN_HEIGHT, renderMinHeight, 0)
+        .setAttrWithMinzoom(Fields.COLOUR, color, 0)
+        .setAttrWithMinzoom(Fields.HIDE_3D, hide3d, 0)
         .setSortKey(renderHeight);
       if (mergeZ13Buildings) {
         feature

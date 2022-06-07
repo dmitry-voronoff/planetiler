@@ -103,9 +103,9 @@ public class Park implements
 
     // park shape
     var outline = features.polygon(LAYER_NAME).setBufferPixels(BUFFER_SIZE)
-      .setAttrWithMinzoom(Fields.CLASS, clazz, 5)
+      .setAttrWithMinzoom(Fields.CLASS, clazz, 2)
       .setMinPixelSize(2)
-      .setMinZoom(4);
+      .setMinZoom(2);
 
     // park name label point (if it has one)
     if (element.name() != null) {
@@ -115,7 +115,7 @@ public class Park implements
 
         var names = LanguageUtils.getNamesWithoutTranslations(element.source().tags());
 
-        outline.putAttrsWithMinzoom(names, 5);
+        outline.putAttrsWithMinzoom(names, 2);
 
         features.pointOnSurface(LAYER_NAME).setBufferPixels(256)
           .setAttr(Fields.CLASS, clazz)

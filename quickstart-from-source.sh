@@ -2,7 +2,7 @@
 
 set -e
 
-AREA="${1:-monaco}"
+AREA="${1:-sweden}"
 shift || echo ""
 
 echo "Will build planetiler, download sources for ${AREA}, and make a map."

@@ -165,17 +165,17 @@ public class Transportation implements
       false
     );
     MINZOOMS = Map.ofEntries(
-      entry(FieldValues.CLASS_PATH, z13Paths ? 13 : 14),
-      entry(FieldValues.CLASS_TRACK, 14),
-      entry(FieldValues.CLASS_SERVICE, 13),
-      entry(FieldValues.CLASS_MINOR, 13),
-      entry(FieldValues.CLASS_RACEWAY, 12),
-      entry(FieldValues.CLASS_TERTIARY, 11),
-      entry(FieldValues.CLASS_BUSWAY, 11),
-      entry(FieldValues.CLASS_SECONDARY, 9),
-      entry(FieldValues.CLASS_PRIMARY, 7),
-      entry(FieldValues.CLASS_TRUNK, 5),
-      entry(FieldValues.CLASS_MOTORWAY, 4)
+      entry(FieldValues.CLASS_PATH, z13Paths ? 0 : 0),
+      entry(FieldValues.CLASS_TRACK, 0),
+      entry(FieldValues.CLASS_SERVICE, 0),
+      entry(FieldValues.CLASS_MINOR, 0),
+      entry(FieldValues.CLASS_RACEWAY, 0),
+      entry(FieldValues.CLASS_TERTIARY, 0),
+      entry(FieldValues.CLASS_BUSWAY, 0),
+      entry(FieldValues.CLASS_SECONDARY, 0),
+      entry(FieldValues.CLASS_PRIMARY, 0),
+      entry(FieldValues.CLASS_TRUNK, 0),
+      entry(FieldValues.CLASS_MOTORWAY, 0)
     );
   }
 
@@ -373,22 +373,22 @@ public class Transportation implements
         .setAttr(Fields.BRUNNEL, brunnel(element.isBridge(), element.isTunnel(), element.isFord()))
         .setAttr(Fields.NETWORK, networkType != null ? networkType.name : null)
         // z8+
-        .setAttrWithMinzoom(Fields.EXPRESSWAY, element.expressway() && !"motorway".equals(highway) ? 1 : null, 8)
+        .setAttrWithMinzoom(Fields.EXPRESSWAY, element.expressway() && !"motorway".equals(highway) ? 1 : null, 0)
         // z9+
-        .setAttrWithMinzoom(Fields.LAYER, nullIfLong(element.layer(), 0), 9)
-        .setAttrWithMinzoom(Fields.BICYCLE, nullIfEmpty(element.bicycle()), 9)
-        .setAttrWithMinzoom(Fields.FOOT, nullIfEmpty(element.foot()), 9)
-        .setAttrWithMinzoom(Fields.HORSE, nullIfEmpty(element.horse()), 9)
-        .setAttrWithMinzoom(Fields.MTB_SCALE, nullIfEmpty(element.mtbScale()), 9)
-        .setAttrWithMinzoom(Fields.ACCESS, access(element.access()), 9)
-        .setAttrWithMinzoom(Fields.TOLL, element.toll() ? 1 : null, 9)
+        .setAttrWithMinzoom(Fields.LAYER, nullIfLong(element.layer(), 0), 0)
+        .setAttrWithMinzoom(Fields.BICYCLE, nullIfEmpty(element.bicycle()), 0)
+        .setAttrWithMinzoom(Fields.FOOT, nullIfEmpty(element.foot()), 0)
+        .setAttrWithMinzoom(Fields.HORSE, nullIfEmpty(element.horse()), 0)
+        .setAttrWithMinzoom(Fields.MTB_SCALE, nullIfEmpty(element.mtbScale()), 0)
+        .setAttrWithMinzoom(Fields.ACCESS, access(element.access()), 0)
+        .setAttrWithMinzoom(Fields.TOLL, element.toll() ? 1 : null, 0)
         // sometimes z9+, sometimes z12+
         .setAttr(Fields.RAMP, minzoom >= 12 ? rampAboveZ12 :
           ((ZoomFunction<Integer>) z -> z < 9 ? null : z >= 12 ? rampAboveZ12 : rampBelowZ12))
         // z12+
-        .setAttrWithMinzoom(Fields.SERVICE, service, 12)
-        .setAttrWithMinzoom(Fields.ONEWAY, nullIfInt(element.isOneway(), 0), 12)
-        .setAttrWithMinzoom(Fields.SURFACE, surface(element.surface()), 12)
+        .setAttrWithMinzoom(Fields.SERVICE, service, 0)
+        .setAttrWithMinzoom(Fields.ONEWAY, nullIfInt(element.isOneway(), 0), 0)
+        .setAttrWithMinzoom(Fields.SURFACE, surface(element.surface()), 0)
         .setMinPixelSize(0) // merge during post-processing, then limit by size
         .setSortKey(element.zOrder())
         .setMinZoom(minzoom);
@@ -413,21 +413,21 @@ public class Transportation implements
 
     int minzoom;
     if ("pier".equals(element.manMade())) {
-      minzoom = 13;
+      minzoom = 0;
     } else if (isResidentialOrUnclassified(highway)) {
-      minzoom = 12;
+      minzoom = 0;
     } else {
       String baseClass = highwayClass.replace("_construction", "");
       minzoom = switch (baseClass) {
-        case FieldValues.CLASS_SERVICE -> isDrivewayOrParkingAisle(service(element.service())) ? 14 : 13;
-        case FieldValues.CLASS_TRACK, FieldValues.CLASS_PATH -> routeRank == 1 ? 12 :
-          (z13Paths || !nullOrEmpty(element.name()) || routeRank <= 2 || !nullOrEmpty(element.sacScale())) ? 13 : 14;
+        case FieldValues.CLASS_SERVICE -> isDrivewayOrParkingAisle(service(element.service())) ? 0 : 0;
+        case FieldValues.CLASS_TRACK, FieldValues.CLASS_PATH -> routeRank == 1 ? 0 :
+          (z13Paths || !nullOrEmpty(element.name()) || routeRank <= 2 || !nullOrEmpty(element.sacScale())) ? 0 : 0;
         default -> MINZOOMS.get(baseClass);
       };
     }
 
     if (isLink(highway)) {
-      minzoom = Math.max(minzoom, 9);
+      minzoom = Math.max(minzoom, 0);
     }
     return minzoom;
   }
@@ -456,15 +456,15 @@ public class Transportation implements
       String service = nullIfEmpty(element.service());
       int minzoom;
       if (service != null) {
-        minzoom = 14;
+        minzoom = 0;
       } else if (FieldValues.SUBCLASS_RAIL.equals(railway)) {
-        minzoom = "main".equals(element.usage()) ? 8 : 10;
+        minzoom = "main".equals(element.usage()) ? 0 : 0;
       } else if (FieldValues.SUBCLASS_NARROW_GAUGE.equals(railway)) {
-        minzoom = 10;
+        minzoom = 0;
       } else if (FieldValues.SUBCLASS_LIGHT_RAIL.equals(railway)) {
-        minzoom = 11;
+        minzoom = 0;
       } else {
-        minzoom = 14;
+        minzoom = 0;
       }
       features.line(LAYER_NAME).setBufferPixels(BUFFER_SIZE)
         .setAttr(Fields.CLASS, clazz)
@@ -472,8 +472,8 @@ public class Transportation implements
         .setAttr(Fields.SERVICE, service(service))
         .setAttr(Fields.ONEWAY, nullIfInt(element.isOneway(), 0))
         .setAttr(Fields.RAMP, element.isRamp() ? 1L : null)
-        .setAttrWithMinzoom(Fields.BRUNNEL, brunnel(element.isBridge(), element.isTunnel(), element.isFord()), 10)
-        .setAttrWithMinzoom(Fields.LAYER, nullIfLong(element.layer(), 0), 9)
+        .setAttrWithMinzoom(Fields.BRUNNEL, brunnel(element.isBridge(), element.isTunnel(), element.isFord()), 0)
+        .setAttrWithMinzoom(Fields.LAYER, nullIfLong(element.layer(), 0), 0)
         .setSortKey(element.zOrder())
         .setMinPixelSize(0) // merge during post-processing, then limit by size
         .setMinZoom(minzoom);
@@ -492,7 +492,7 @@ public class Transportation implements
       .setAttr(Fields.LAYER, nullIfLong(element.layer(), 0))
       .setSortKey(element.zOrder())
       .setMinPixelSize(0) // merge during post-processing, then limit by size
-      .setMinZoom(12);
+      .setMinZoom(0);
   }
 
   @Override
@@ -507,7 +507,7 @@ public class Transportation implements
       .setAttr(Fields.LAYER, nullIfLong(element.layer(), 0))
       .setSortKey(element.zOrder())
       .setMinPixelSize(0) // merge during post-processing, then limit by size
-      .setMinZoom(11);
+      .setMinZoom(0);
   }
 
   @Override
@@ -525,7 +525,7 @@ public class Transportation implements
           .setAttr(Fields.BRUNNEL, brunnel("bridge".equals(manMade), false, false))
           .setAttr(Fields.LAYER, nullIfLong(element.layer(), 0))
           .setSortKey(element.zOrder())
-          .setMinZoom(13);
+          .setMinZoom(0);
       }
     }
   }
