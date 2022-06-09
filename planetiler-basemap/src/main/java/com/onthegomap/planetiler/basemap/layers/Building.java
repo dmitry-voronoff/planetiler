@@ -155,17 +155,17 @@ public class Building implements
       parseDoubleOrNull(element.buildingminLevel())
     );
 
-    int renderHeight = (int) Math.ceil(height != null ? height : levels != null ? (levels * 3.66) : 0);
+    int renderHeight = (int) Math.ceil(height != null ? height : levels != null ? (levels * 3.66) : 5);
     int renderMinHeight = (int) Math.floor(minHeight != null ? minHeight : minLevels != null ? (minLevels * 3.66) : 0);
 
     if (renderHeight < 3660 && renderMinHeight < 3660) {
       var feature = features.polygon(LAYER_NAME).setBufferPixels(BUFFER_SIZE)
-        .setMinZoom(0)
+        .setMinZoom(10)
         .setMinPixelSize(1)
-        .setAttrWithMinzoom(Fields.RENDER_HEIGHT, renderHeight, 0)
-        .setAttrWithMinzoom(Fields.RENDER_MIN_HEIGHT, renderMinHeight, 0)
-        .setAttrWithMinzoom(Fields.COLOUR, color, 0)
-        .setAttrWithMinzoom(Fields.HIDE_3D, hide3d, 0)
+        .setAttrWithMinzoom(Fields.RENDER_HEIGHT, renderHeight, 10)
+        .setAttrWithMinzoom(Fields.RENDER_MIN_HEIGHT, renderMinHeight, 10)
+        .setAttrWithMinzoom(Fields.COLOUR, color, 10)
+        .setAttrWithMinzoom(Fields.HIDE_3D, hide3d, 10)
         .setSortKey(renderHeight);
       if (mergeZ13Buildings) {
         feature
