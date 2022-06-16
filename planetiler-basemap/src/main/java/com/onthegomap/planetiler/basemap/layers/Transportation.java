@@ -165,13 +165,13 @@ public class Transportation implements
       false
     );
     MINZOOMS = Map.ofEntries(
-      entry(FieldValues.CLASS_PATH, z13Paths ? 0 : 0),
-      entry(FieldValues.CLASS_TRACK, 0),
-      entry(FieldValues.CLASS_SERVICE, 8),
-      entry(FieldValues.CLASS_MINOR, 0),
-      entry(FieldValues.CLASS_RACEWAY, 8),
-      entry(FieldValues.CLASS_TERTIARY, 0),
-      entry(FieldValues.CLASS_BUSWAY, 8),
+      entry(FieldValues.CLASS_PATH, z13Paths ? 13 : 13),
+      entry(FieldValues.CLASS_TRACK, 11),
+      entry(FieldValues.CLASS_SERVICE, 10),
+      entry(FieldValues.CLASS_MINOR,8),
+      entry(FieldValues.CLASS_RACEWAY, 10),
+      entry(FieldValues.CLASS_TERTIARY, 6),
+      entry(FieldValues.CLASS_BUSWAY, 12),
       entry(FieldValues.CLASS_SECONDARY, 0),
       entry(FieldValues.CLASS_PRIMARY, 0),
       entry(FieldValues.CLASS_TRUNK, 0),

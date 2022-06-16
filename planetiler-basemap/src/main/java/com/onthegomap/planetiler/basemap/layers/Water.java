@@ -84,13 +84,13 @@ public class Water implements
     record WaterInfo(int minZoom, int maxZoom, String clazz) {}
     WaterInfo info = switch (table) {
       case "ne_110m_ocean" -> new WaterInfo(0, 1, FieldValues.CLASS_OCEAN);
-      case "ne_50m_ocean" -> new WaterInfo(2, 4, FieldValues.CLASS_OCEAN);
-      case "ne_10m_ocean" -> new WaterInfo(5, 5, FieldValues.CLASS_OCEAN);
+      case "ne_50m_ocean" -> new WaterInfo(2, 3, FieldValues.CLASS_OCEAN);
+      case "ne_10m_ocean" -> new WaterInfo(5, 4, FieldValues.CLASS_OCEAN);
 
       // TODO: get OSM ID from low-zoom natural earth lakes
       case "ne_110m_lakes" -> new WaterInfo(0, 1, FieldValues.CLASS_LAKE);
       case "ne_50m_lakes" -> new WaterInfo(2, 3, FieldValues.CLASS_LAKE);
-      case "ne_10m_lakes" -> new WaterInfo(4, 5, FieldValues.CLASS_LAKE);
+      case "ne_10m_lakes" -> new WaterInfo(4, 4, FieldValues.CLASS_LAKE);
       default -> null;
     };
     if (info != null) {
@@ -117,7 +117,7 @@ public class Water implements
       features.polygon(LAYER_NAME)
         .setBufferPixels(BUFFER_SIZE)
         .setMinPixelSizeBelowZoom(11, 2)
-        .setMinZoom(6)
+        .setMinZoom(4)
         .setAttr(Fields.ID, element.source().id())
         .setAttr(Fields.INTERMITTENT, element.isIntermittent() ? 1 : 0)
         .setAttrWithMinzoom(Fields.BRUNNEL, Utils.brunnel(element.isBridge(), element.isTunnel()), 12)

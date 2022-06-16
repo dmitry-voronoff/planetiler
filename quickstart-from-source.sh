@@ -13,4 +13,4 @@ echo "Building..."
 ./mvnw -DskipTests=true --projects planetiler-dist -am package
 
 echo "Running..."
-java -Xmx110g -XX:MaxHeapFreeRatio=40 -jar planetiler-dist/target/*with-deps.jar --force --download-threads=10 --download-chunk-size-mb=1000 --nodemap-type=array --storage=ram --area="${AREA}" $*
+java -Xmx20g -XX:MaxHeapFreeRatio=40 -jar planetiler-dist/target/*with-deps.jar --only-layesr=transportation,building,landuse,water --force --download-threads=10 --download-chunk-size-mb=1000 --nodemap-type=array --storage=mmap --area="${AREA}" $*
